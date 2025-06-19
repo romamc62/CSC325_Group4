@@ -33,7 +33,7 @@ MySQL.
 
 Notification system for reminders. 
 
-Admin functionality (optional) to manage health insights. 
+Admin functionality to manage health insights. 
 
 Export to PDF or email sharing capability. 
 
