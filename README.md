@@ -8,29 +8,49 @@ The project will be built using JavaFX and MySQL and will be developed in NetBea
 ## WRSPM: 
 #### W – World Assumptions
 Users have access to a smartphone or tablet and basic digital literacy.
+
 Users are health-conscious and want to manage blood pressure effectively. 
+
 Some users may have physical or visual impairments, so the UI should be accessible. Users may need to share their readings with doctors. 
+
 #### R – User Requirements 
 Ability to register/login securely. 
+
 Input blood pressure readings manually. 
+
 View a log of historical readings with timestamps. 
+
 Receive alerts for abnormal values. 
+
 Get reminders to check BP. 
+
 Export or share reports with physicians. 
+
 #### S – Specifications and Interface Needs 
 Clean, mobile-friendly UI with large fonts and icons. 
+
 MySQL. 
+
 Notification system for reminders. 
+
 Admin functionality (optional) to manage health insights. 
+
 Export to PDF or email sharing capability. 
+
 #### P – Program
 JavaFX. 
-MySQL 
+
+MySQL. 
+
 NetBeans for development. 
+
 GitHub for source control and versioning. 
+
 YouTrack for sprint planning, bug tracking, and task management. 
+
 #### M – Machine
 Any modern laptop with Java SDK 14+ and NetBeans. 
+
 Internet access for MySQL and GitHub integrations.
 
 
