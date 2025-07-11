@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bloodpressuremonitor.group4.csc325_group4.view.LoginView">
+   <children>
+      <BorderPane prefHeight="428.0" prefWidth="632.0">
+         <center>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TextField maxWidth="200.0" prefWidth="200.0" promptText="Email" />
+                  <PasswordField maxWidth="200.0" prefWidth="200.0" promptText="Password" />
+               </children>
+               <padding>
+                  <Insets top="50.0" />
+               </padding>
+            </VBox>
+         </center>
+         <bottom>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="loginButton" onAction="#handleLoginButton" mnemonicParsing="false" prefWidth="75.0" text="Login" />
+                  <Button fx:id="signUpButton" onAction="#handleSignUpButton" mnemonicParsing="false" prefWidth="75.0" text="Sign Up" />
+               </children>
+            </HBox>
+         </bottom>
+         <top>
+            <Label prefHeight="72.0" prefWidth="170.0" text="Blood Pressure Monitor Login" BorderPane.alignment="CENTER" />
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>

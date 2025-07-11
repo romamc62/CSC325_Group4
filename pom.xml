@@ -82,7 +82,7 @@
         <dependency>
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-firestore</artifactId>
-            <version>3.7.10</version>
+            <version>3.17.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.auth</groupId>
@@ -97,6 +97,16 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.fxml</include>
+                    <include>**/*.json</include>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -117,7 +127,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.bloodpressuremonitor.group4.csc325_group4/com.bloodpressuremonitor.group4.csc325_group4.HelloApplication
+                                com.bloodpressuremonitor.group4.csc325_group4/com.bloodpressuremonitor.group4.csc325_group4.view.App
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
