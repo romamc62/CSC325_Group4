@@ -1,17 +1,17 @@
 package com.bloodpressuremonitor.group4.csc325_group4.model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class BloodPressureReading {
 
     private int systolic;
     private int diastolic;
-    private LocalDateTime timeStamp;
+    private Date readingTimestamp;
 
     public BloodPressureReading(int systolic, int diastolic) {
         this.systolic = systolic;
         this.diastolic = diastolic;
-        this.timeStamp = LocalDateTime.now();
+        this.readingTimestamp = new Date();
     }
 
     public int getSystolic() {
@@ -30,11 +30,11 @@ public class BloodPressureReading {
         this.diastolic = diastolic;
     }
 
-    public LocalDateTime getTimeStamp() {
-        return timeStamp;
+    public Date getReadingTimestamp() {
+        return readingTimestamp;
     }
 
-    public void setTimeStamp(LocalDateTime timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setReadingTimestamp(Date readingTimestamp) {
+        this.readingTimestamp = readingTimestamp;
     }
 }
