@@ -28,7 +28,7 @@ public class App extends Application {
         fauth = FirebaseAuth.getInstance();
         scene = new Scene(loadFXML("/files/LoginView.fxml"));
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Login");
+        primaryStage.setTitle("Blood Pressure Monitoring Application");
         primaryStage.show();
 
     }
