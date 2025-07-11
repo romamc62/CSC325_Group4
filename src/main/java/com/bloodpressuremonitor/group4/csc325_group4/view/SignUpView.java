@@ -25,7 +25,13 @@ public class SignUpView {
     @FXML
     private Button backToLoginButton;
 
-    private SignUpViewModel signUpViewModel;
+    private SignUpViewModel signUpViewModel =  new SignUpViewModel();
+
+    @FXML
+    public void initialize() {
+        emailField.textProperty().bindBidirectional(signUpViewModel.emailProperty());
+        passwordField.textProperty().bindBidirectional(signUpViewModel.passwordProperty());
+    }
 
     @FXML
     private void handleBackToLoginButton(ActionEvent event) throws IOException {
@@ -41,8 +47,7 @@ public class SignUpView {
             if(hasAllFields(email, password,confirmPassword)){
                 if(isValidEmail(email)){
                     if(passwordMatches(password,confirmPassword)){
-                        SignUpViewModel suvm = new SignUpViewModel();
-                        suvm.registerUser(email,password);
+                        signUpViewModel.registerUser();
                         App.setRoot("/files/loginView.fxml");
                     }
                 }

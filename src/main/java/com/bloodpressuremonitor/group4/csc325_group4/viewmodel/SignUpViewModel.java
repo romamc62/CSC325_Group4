@@ -1,23 +1,39 @@
 package com.bloodpressuremonitor.group4.csc325_group4.viewmodel;
 
+import com.bloodpressuremonitor.group4.csc325_group4.model.SignUpModel;
 import com.bloodpressuremonitor.group4.csc325_group4.view.App;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
 
 public class SignUpViewModel {
 
-    //private String email;
-    //private String password;
+    private final StringProperty email = new SimpleStringProperty();
+    private final StringProperty password =  new SimpleStringProperty();
+    private final SignUpModel signUpModel = new SignUpModel();
     //private String confirmPassword;
 
+    public StringProperty emailProperty() { return email; }
+    public String getEmail() { return email.get(); }
+    public void setEmail(String email) { this.email.set(email); }
+
+    public StringProperty passwordProperty() { return password; }
+    public String getPassword() { return password.get(); }
+    public void setPassword(String password) { this.password.set(password); }
+
     public SignUpViewModel() {
-        //this.email = email;
-        //this.password = password;
-        //this.confirmPassword = confirmPassword;
+
     }
 
+    public void registerUser(){
+        String email = getEmail();
+        String password = getPassword();
+        signUpModel.registerUser(email,password);
+    }
+/*
     public boolean registerUser(String email, String password) {
         UserRecord.CreateRequest request = new  UserRecord.CreateRequest()
                 .setEmail(email)
@@ -38,8 +54,8 @@ public class SignUpViewModel {
             return false;
         }
 
-
     }
 
+ */
 
 }
