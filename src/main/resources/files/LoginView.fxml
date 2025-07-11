@@ -3,7 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bloodpressuremonitor.group4.csc325_group4.view.LoginView">
    <children>
@@ -22,13 +22,16 @@
          <bottom>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="loginButton" onAction="#handleLoginButton" mnemonicParsing="false" prefWidth="75.0" text="Login" />
-                  <Button fx:id="signUpButton" onAction="#handleSignUpButton" mnemonicParsing="false" prefWidth="75.0" text="Sign Up" />
+                  <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLoginButton" prefWidth="75.0" text="Login" />
+                  <Button fx:id="signUpButton" mnemonicParsing="false" onAction="#handleSignUpButton" prefWidth="75.0" text="Sign Up" />
                </children>
             </HBox>
          </bottom>
          <top>
-            <Label prefHeight="72.0" prefWidth="170.0" text="Blood Pressure Monitor Login" BorderPane.alignment="CENTER" />
+            <Label prefHeight="72.0" prefWidth="271.0" text="Blood Pressure Monitor Login" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
          </top>
       </BorderPane>
    </children>

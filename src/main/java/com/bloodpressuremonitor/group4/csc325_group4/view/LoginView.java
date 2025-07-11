@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
+
 public class LoginView {
 
     @FXML
@@ -22,16 +24,13 @@ public class LoginView {
     private void handleLoginButton(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("TODO");
-        alert.setHeaderText("TODO: Login");
+        alert.setHeaderText("TODO: Login User");
         alert.showAndWait();
     }
 
     @FXML
-    private void handleSignUpButton(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("TODO");
-        alert.setHeaderText("TODO: Sign Up");
-        alert.showAndWait();
+    private void handleSignUpButton(ActionEvent event) throws IOException {
+        App.setRoot("/files/SignUpView.fxml");
     }
 
 

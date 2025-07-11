@@ -36,3 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Firebase Key ###
+src/main/resources/files/key.json
