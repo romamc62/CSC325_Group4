@@ -7,10 +7,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import java.io.IOException;
 
-/**
- * TODO : Generate and share a Firestore Key, add to .gitignore
- *
- */
+
 public class FirestoreContext {
 
     public Firestore firebase() {

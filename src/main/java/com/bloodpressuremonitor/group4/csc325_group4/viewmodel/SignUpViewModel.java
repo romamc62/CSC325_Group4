@@ -13,8 +13,8 @@ public class SignUpViewModel {
 
     private final StringProperty email = new SimpleStringProperty();
     private final StringProperty password =  new SimpleStringProperty();
+    private final StringProperty confirmPassword = new SimpleStringProperty();
     private final SignUpModel signUpModel = new SignUpModel();
-    //private String confirmPassword;
 
     public StringProperty emailProperty() { return email; }
     public String getEmail() { return email.get(); }
@@ -24,6 +24,10 @@ public class SignUpViewModel {
     public String getPassword() { return password.get(); }
     public void setPassword(String password) { this.password.set(password); }
 
+    public StringProperty confirmPasswordProperty() { return confirmPassword; }
+    public String getConfirmPassword() { return confirmPassword.get(); }
+    public void setConfirmPassword(String confirmPassword) { this.confirmPassword.set(confirmPassword); }
+
     public SignUpViewModel() {
 
     }
@@ -31,7 +35,8 @@ public class SignUpViewModel {
     public void registerUser(){
         String email = getEmail();
         String password = getPassword();
-        signUpModel.registerUser(email,password);
+        String confirm = getConfirmPassword();
+        signUpModel.registerUser(email,password,confirm);
     }
 /*
     public boolean registerUser(String email, String password) {
