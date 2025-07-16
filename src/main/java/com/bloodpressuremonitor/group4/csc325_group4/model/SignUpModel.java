@@ -5,6 +5,8 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import javafx.scene.control.Alert;
 
+import java.io.IOException;
+
 public class SignUpModel {
 
     public boolean registerUser(String email, String password) {
@@ -18,6 +20,7 @@ public class SignUpModel {
         try {
             userRecord = App.fauth.createUser(request);
             System.out.println("Successfully registered user: "  + userRecord.getUid());
+            App.setRoot("/files/loginView.fxml");
             return true;
         } catch (FirebaseAuthException ex){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -25,6 +28,8 @@ public class SignUpModel {
             alert.setHeaderText(ex.getMessage());
             alert.showAndWait();
             return false;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }

@@ -1,5 +1,6 @@
 package com.bloodpressuremonitor.group4.csc325_group4.view;
 
+import com.bloodpressuremonitor.group4.csc325_group4.viewmodel.LoginViewModel;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import javafx.event.ActionEvent;
@@ -22,6 +23,14 @@ public class LoginView {
     @FXML
     private Button signUpButton;
 
+    private LoginViewModel loginViewModel = new LoginViewModel();
+
+    @FXML
+    public void initialize() {
+        emailField.textProperty().bindBidirectional(loginViewModel.emailProperty());
+        passwordField.textProperty().bindBidirectional(loginViewModel.passwordProperty());
+    }
+
     @FXML
     private void handleLoginButton(ActionEvent event) {
         String email = emailField.getText().trim();
@@ -33,6 +42,8 @@ public class LoginView {
                 alert.setHeaderText("Please enter your email and password");
                 alert.showAndWait();
             } else {
+                loginViewModel.login();
+                /*
                 UserRecord user = App.fauth.getUserByEmail(email);
                 if (user == null) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -46,6 +57,8 @@ public class LoginView {
                     alert.showAndWait();
                     App.setRoot("/files/DashboardView.fxml");
                 }
+
+                 */
             }
         } catch (FirebaseAuthException e) {
             throw new RuntimeException(e);
@@ -53,10 +66,6 @@ public class LoginView {
             throw new RuntimeException(e);
         }
 
-        //Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        //alert.setTitle("TODO");
-        //alert.setHeaderText("TODO: Login User");
-        //alert.showAndWait();
     }
 
     @FXML
