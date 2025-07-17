@@ -12,7 +12,6 @@ public class LoginViewModel {
     private final StringProperty email = new SimpleStringProperty();
     private final StringProperty password =  new SimpleStringProperty();
     private final LoginModel loginModel = new LoginModel();
-    //private String confirmPassword;
 
     public StringProperty emailProperty() { return email; }
     public String getEmail() { return email.get(); }

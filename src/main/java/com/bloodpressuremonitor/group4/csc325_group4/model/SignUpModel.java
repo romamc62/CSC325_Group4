@@ -6,10 +6,14 @@ import com.google.firebase.auth.UserRecord;
 import javafx.scene.control.Alert;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 
 public class SignUpModel {
 
-    public boolean registerUser(String email, String password) {
+    private User newUser;
+
+    public boolean registerUser(String email, String password, String firstName, String lastName, LocalDate dateOfBirth, int age) {
         UserRecord.CreateRequest request = new  UserRecord.CreateRequest()
                 .setEmail(email)
                 .setEmailVerified(false)
@@ -19,7 +23,11 @@ public class SignUpModel {
         UserRecord userRecord;
         try {
             userRecord = App.fauth.createUser(request);
-            System.out.println("Successfully registered user: "  + userRecord.getUid());
+            newUser = new User(firstName, lastName, email, age, dateOfBirth, userRecord.getUid());
+            System.out.println("Successfully registered user: \n"  + newUser.toString());
+
+            //TODO : initialize new user in FireStore database
+
             App.setRoot("/files/loginView.fxml");
             return true;
         } catch (FirebaseAuthException ex){

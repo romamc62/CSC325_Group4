@@ -3,12 +3,10 @@ package com.bloodpressuremonitor.group4.csc325_group4.view;
 import com.bloodpressuremonitor.group4.csc325_group4.viewmodel.SignUpViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
+import java.util.function.UnaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,16 +19,60 @@ public class SignUpView {
     @FXML
     private PasswordField confirmPasswordField;
     @FXML
+    private TextField firstNameField;
+    @FXML
+    private TextField lastNameField;
+    @FXML
+    private TextField dateOfBirthField;
+    @FXML
     private Button registerButton;
     @FXML
     private Button backToLoginButton;
 
     private SignUpViewModel signUpViewModel =  new SignUpViewModel();
 
+
     @FXML
     public void initialize() {
         emailField.textProperty().bindBidirectional(signUpViewModel.emailProperty());
         passwordField.textProperty().bindBidirectional(signUpViewModel.passwordProperty());
+        confirmPasswordField.textProperty().bindBidirectional(signUpViewModel.confirmPasswordProperty());
+        firstNameField.textProperty().bindBidirectional(signUpViewModel.firstNameProperty());
+        lastNameField.textProperty().bindBidirectional(signUpViewModel.lastNameProperty());
+        dateOfBirthField.textProperty().bindBidirectional(signUpViewModel.dateOfBirthProperty());
+
+
+        //date of birth text field formatter
+        dateOfBirthField.setTextFormatter(new TextFormatter<String>(change -> {
+            if(change.isContentChange()){
+                String oldText = change.getControlText();
+                String newText = change.getControlNewText().replaceAll("[^\\d]", "");
+
+                if(newText.length() > 8){
+                    newText = newText.substring(0, 8);
+                }
+
+                StringBuilder format = new StringBuilder();
+                for(int i = 0; i < newText.length(); i++){
+                    if(i == 2 || i == 4){
+                        format.append("/");
+                    }
+                    format.append(newText.charAt(i));
+                }
+
+                int newCaretPosition = format.length();
+
+                change.setText(format.toString());
+                change.setRange(0, oldText.length());
+
+                change.selectRange(newCaretPosition, newCaretPosition);
+
+            }
+
+            return change;
+        }));
+
+
     }
 
     @FXML
@@ -44,28 +86,28 @@ public class SignUpView {
             String email = emailField.getText().trim();
             String password = passwordField.getText().trim();
             String confirmPassword = confirmPasswordField.getText().trim();
-            if(hasAllFields(email, password,confirmPassword)){
+            String firstName = firstNameField.getText().trim();
+            String lastName = lastNameField.getText().trim();
+            String dateOfBirth = dateOfBirthField.getText().trim();
+            if(hasAllFields(email, password,confirmPassword, firstName, lastName, dateOfBirth)){
                 if(isValidEmail(email)){
                     if(passwordMatches(password,confirmPassword)){
                         signUpViewModel.registerUser();
-                        //App.setRoot("/files/loginView.fxml");
                     }
                 }
             }
         } catch (Exception e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText(e.getMessage());
+            alert.setHeaderText("Enter All Fields");
             alert.showAndWait();
         }
-        //Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        //alert.setTitle("TODO");
-        //alert.setHeaderText("TODO: Register User");
-        //alert.showAndWait();
+
     }
 
-    private static boolean hasAllFields(String email, String password, String confirmPassword) {
-        if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+    //checks if all fields have values
+    private static boolean hasAllFields(String email, String password, String confirmPassword, String firstName, String lastName, String dateOfBirth) {
+        if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || dateOfBirth.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText("Enter All Fields");
