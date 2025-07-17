@@ -4,8 +4,13 @@ import com.bloodpressuremonitor.group4.csc325_group4.viewmodel.SignUpViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.threeten.bp.format.DateTimeParseException;
 
 import java.io.IOException;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -92,11 +97,13 @@ public class SignUpView {
             if(hasAllFields(email, password,confirmPassword, firstName, lastName, dateOfBirth)){
                 if(isValidEmail(email)){
                     if(passwordMatches(password,confirmPassword)){
-                        signUpViewModel.registerUser();
+                        if(isValidDate(dateOfBirth)) {
+                            signUpViewModel.registerUser();
+                        }
                     }
                 }
             }
-        } catch (Exception e){
+        } catch (NullPointerException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Enter All Fields");
@@ -118,6 +125,7 @@ public class SignUpView {
         }
     }
 
+    //checks if email is proper format
     private static boolean isValidEmail(String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         Pattern pattern = Pattern.compile(emailRegex);
@@ -133,6 +141,23 @@ public class SignUpView {
         }
     }
 
+    //checks if date is valid
+    private static boolean isValidDate(String dateOfBirth) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy").withResolverStyle(ResolverStyle.STRICT);
+
+        try {
+            LocalDate.parse(dateOfBirth, formatter);
+            return true;
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid Date");
+            alert.showAndWait();
+            return false;
+        }
+    }
+
+    //checks if password and confirmPassword match
     private static boolean passwordMatches(String password, String confirmPassword) {
         if(password.equals(confirmPassword)){
             return true;

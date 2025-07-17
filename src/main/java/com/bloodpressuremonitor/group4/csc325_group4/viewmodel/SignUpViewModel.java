@@ -62,11 +62,11 @@ public class SignUpViewModel {
         String firstName = getFirstName();
         String lastName = getLastName();
         String dateOfBirth = getDateOfBirth();
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
+        //calculates age of new user
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDate dob = LocalDate.parse(dateOfBirth, format);
         LocalDate currDate = LocalDate.now();
-
         Period age = Period.between(dob, currDate);
 
         signUpModel.registerUser(email, password, firstName, lastName, dob, age.getYears());

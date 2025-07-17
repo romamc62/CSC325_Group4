@@ -20,6 +20,7 @@ module com.bloodpressuremonitor.group4.csc325_group4 {
     requires com.dlsc.formsfx;
     requires eu.hansolo.tilesfx;
     requires com.google.gson;
+    requires org.threeten.bp;
 
     opens com.bloodpressuremonitor.group4.csc325_group4.model; // to javafx.fxml;
     exports  com.bloodpressuremonitor.group4.csc325_group4.model;
