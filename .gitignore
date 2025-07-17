@@ -39,3 +39,6 @@ build/
 
 ### Firebase Key ###
 src/main/resources/files/key.json
+
+### Firestore API Key ###
+src/main/resources/files/FirebaseAPI.json

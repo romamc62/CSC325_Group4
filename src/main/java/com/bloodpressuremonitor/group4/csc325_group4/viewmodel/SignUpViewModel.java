@@ -33,7 +33,7 @@ public class SignUpViewModel {
         String password = getPassword();
         signUpModel.registerUser(email,password);
     }
-/*
+/*          --Method moved to SignUpModel--
     public boolean registerUser(String email, String password) {
         UserRecord.CreateRequest request = new  UserRecord.CreateRequest()
                 .setEmail(email)

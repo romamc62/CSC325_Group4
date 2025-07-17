@@ -48,7 +48,7 @@ public class SignUpView {
                 if(isValidEmail(email)){
                     if(passwordMatches(password,confirmPassword)){
                         signUpViewModel.registerUser();
-                        App.setRoot("/files/loginView.fxml");
+                        //App.setRoot("/files/loginView.fxml");
                     }
                 }
             }
