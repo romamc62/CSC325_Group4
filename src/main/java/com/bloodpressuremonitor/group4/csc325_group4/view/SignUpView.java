@@ -143,7 +143,7 @@ public class SignUpView {
 
     //checks if date is valid
     private static boolean isValidDate(String dateOfBirth) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy").withResolverStyle(ResolverStyle.STRICT);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/uuuu").withResolverStyle(ResolverStyle.STRICT);
 
         try {
             LocalDate.parse(dateOfBirth, formatter);
