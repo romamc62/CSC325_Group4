@@ -1,6 +1,7 @@
 package com.bloodpressuremonitor.group4.csc325_group4.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -42,8 +43,9 @@ public class BloodPressureReading {
 
     //gets current date and time, formats as string and returns string
     public static String dateToString(){
-        LocalDate now = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+        System.out.println(now.format(formatter));
         return now.format(formatter);
     }
 }
