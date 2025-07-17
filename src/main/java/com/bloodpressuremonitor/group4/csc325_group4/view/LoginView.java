@@ -34,36 +34,9 @@ public class LoginView {
     @FXML
     private void handleLoginButton(ActionEvent event) {
         try {
-            String email = emailField.getText().trim();
-            String password = passwordField.getText().trim();
+            //String email = emailField.getText().trim();
+            //String password = passwordField.getText().trim();
             loginViewModel.login();
-            /*
-            if (email.isEmpty() || password.isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
-                alert.setHeaderText("Please enter your email and password");
-                alert.showAndWait();
-            } else {
-
-                */
-
-                /* ---moved authentication to LoginModel---
-                UserRecord user = App.fauth.getUserByEmail(email);
-                if (user == null) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Invalid Email");
-                    alert.showAndWait();
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Success");
-                    alert.setHeaderText("Simulated Login Successful");
-                    alert.showAndWait();
-                    App.setRoot("/files/DashboardView.fxml");
-                }
-
-                 */
-            //}
         } catch (FirebaseAuthException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

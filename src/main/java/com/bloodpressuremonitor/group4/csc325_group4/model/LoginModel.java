@@ -19,7 +19,7 @@ public class LoginModel {
     public UserRecord currUser;
 
     public boolean login(String email, String password) throws FirebaseAuthException, IOException {
-        //UserRecord user = App.fauth.getUserByEmail(email);
+
         if (!pAuth(email, password)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
@@ -67,10 +67,6 @@ public class LoginModel {
                 byte[] input = jsonInput.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
-
-            //InputStream in = conn.getResponseCode() == 200 ? conn.getInputStream() : conn.getErrorStream();
-            //String response = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)).lines().reduce("", String::concat);
-            //JsonObject json = new JsonObject().getAsJsonObject(response);
 
             if(conn.getResponseCode() == 200){
                 currUser = App.fauth.getUserByEmail(email);

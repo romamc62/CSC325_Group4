@@ -9,12 +9,24 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Date;
+
 public class SignUpViewModel {
 
     private final StringProperty email = new SimpleStringProperty();
     private final StringProperty password =  new SimpleStringProperty();
+    private final StringProperty confirmPassword = new SimpleStringProperty();
+    private final StringProperty firstName = new SimpleStringProperty();
+    private final StringProperty lastName = new SimpleStringProperty();
+    private final StringProperty dateOfBirth = new SimpleStringProperty();
     private final SignUpModel signUpModel = new SignUpModel();
-    //private String confirmPassword;
+
 
     public StringProperty emailProperty() { return email; }
     public String getEmail() { return email.get(); }
@@ -24,6 +36,22 @@ public class SignUpViewModel {
     public String getPassword() { return password.get(); }
     public void setPassword(String password) { this.password.set(password); }
 
+    public StringProperty confirmPasswordProperty() { return confirmPassword; }
+    public String getConfirmPassword() { return confirmPassword.get(); }
+    public void setConfirmPassword(String confirmPassword) { this.confirmPassword.set(confirmPassword); }
+
+    public StringProperty firstNameProperty() { return firstName; }
+    public String getFirstName() { return firstName.get(); }
+    public void setFirstName(String firstName) { this.firstName.set(firstName); }
+
+    public StringProperty lastNameProperty() { return lastName; }
+    public String getLastName() { return lastName.get(); }
+    public void setLastName(String lastName) { this.lastName.set(lastName); }
+
+    public StringProperty dateOfBirthProperty() { return dateOfBirth; }
+    public String getDateOfBirth() { return dateOfBirth.get(); }
+    public void setDateOfBirth(String dateOfBirth) { this.dateOfBirth.set(dateOfBirth); }
+
     public SignUpViewModel() {
 
     }
@@ -31,31 +59,17 @@ public class SignUpViewModel {
     public void registerUser(){
         String email = getEmail();
         String password = getPassword();
-        signUpModel.registerUser(email,password);
+        String firstName = getFirstName();
+        String lastName = getLastName();
+        String dateOfBirth = getDateOfBirth();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
+        LocalDate dob = LocalDate.parse(dateOfBirth, format);
+        LocalDate currDate = LocalDate.now();
+
+        Period age = Period.between(dob, currDate);
+
+        signUpModel.registerUser(email, password, firstName, lastName, dob, age.getYears());
     }
-/*          --Method moved to SignUpModel--
-    public boolean registerUser(String email, String password) {
-        UserRecord.CreateRequest request = new  UserRecord.CreateRequest()
-                .setEmail(email)
-                .setEmailVerified(false)
-                .setPassword(password)
-                .setDisabled(false);
-
-        UserRecord userRecord;
-        try {
-            userRecord = App.fauth.createUser(request);
-            System.out.println("Successfully registered user: "  + userRecord.getUid());
-            return true;
-        } catch (FirebaseAuthException ex){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(ex.getMessage());
-            alert.showAndWait();
-            return false;
-        }
-
-    }
-
- */
 
 }
