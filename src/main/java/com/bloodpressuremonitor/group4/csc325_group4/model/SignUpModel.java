@@ -28,6 +28,8 @@ public class SignUpModel {
 
             //TODO : initialize new user in FireStore database
 
+            App.fstore.collection("userData").document(userRecord.getUid()).set(newUser);
+
             App.setRoot("/files/loginView.fxml");
             return true;
         } catch (FirebaseAuthException ex){
