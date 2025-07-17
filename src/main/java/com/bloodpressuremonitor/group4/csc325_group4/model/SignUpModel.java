@@ -29,6 +29,8 @@ public class SignUpModel {
 
             //TODO : initialize new user in FireStore database
 
+            newUser.getBPHistory().add(new BloodPressureReading(120, 80));
+
             App.fstore.collection("userData").document(userRecord.getUid()).set(newUser);
 
             App.setRoot("/files/loginView.fxml");
