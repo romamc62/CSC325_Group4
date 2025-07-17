@@ -1,6 +1,7 @@
 package com.bloodpressuremonitor.group4.csc325_group4.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +12,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
     private int age;
     private List<BloodPressureReading> BPHistory;
 
@@ -21,7 +22,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.age = age;
-        this.dateOfBirth = dateOfBirth;
+        this.dateOfBirth = dateOfBirth.format(DateTimeFormatter.ISO_LOCAL_DATE);
         this.id = id;
         this.BPHistory = BPHistory;
     }
@@ -33,7 +34,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.age = age;
-        this.dateOfBirth = dateOfBirth;
+        this.dateOfBirth = dateOfBirth.format(DateTimeFormatter.ISO_LOCAL_DATE);
         BPHistory = new ArrayList<BloodPressureReading>();
     }
 
@@ -77,11 +78,11 @@ public class User {
         this.age = age;
     }
 
-    public LocalDate getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
