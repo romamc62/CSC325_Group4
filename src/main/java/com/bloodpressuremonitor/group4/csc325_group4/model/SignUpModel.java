@@ -27,8 +27,6 @@ public class SignUpModel {
             newUser = new User(firstName, lastName, email, age, dateOfBirth, userRecord.getUid());
             System.out.println("Successfully registered user: \n"  + newUser.toString());
 
-            //TODO : initialize new user in FireStore database
-
             newUser.getBPHistory().add(new BloodPressureReading(120, 80));
 
             App.fstore.collection("userData").document(userRecord.getUid()).set(newUser);
