@@ -45,7 +45,8 @@ public class BloodPressureReading {
     public static String dateToString(){
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
-        System.out.println(now.format(formatter));
-        return now.format(formatter);
+        String bpReading = now.format(formatter);
+        System.out.println("Adding BP Reading: " + bpReading);
+        return bpReading;
     }
 }
