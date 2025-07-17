@@ -1,18 +1,19 @@
 package com.bloodpressuremonitor.group4.csc325_group4.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class BloodPressureReading {
 
     private int systolic;
     private int diastolic;
-    private LocalDate readingTimestamp;
+    private String readingTimestamp;
 
     public BloodPressureReading(int systolic, int diastolic) {
         this.systolic = systolic;
         this.diastolic = diastolic;
-        this.readingTimestamp = LocalDate.now();
+        this.readingTimestamp = dateToString();
     }
 
     public int getSystolic() {
@@ -31,11 +32,18 @@ public class BloodPressureReading {
         this.diastolic = diastolic;
     }
 
-    public LocalDate getReadingTimestamp() {
+    public String getReadingTimestamp() {
         return readingTimestamp;
     }
 
-    public void setReadingTimestamp(LocalDate readingTimestamp) {
+    public void setReadingTimestamp(String readingTimestamp) {
         this.readingTimestamp = readingTimestamp;
+    }
+
+    //gets current date and time, formats as string and returns string
+    public static String dateToString(){
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        return now.format(formatter);
     }
 }
