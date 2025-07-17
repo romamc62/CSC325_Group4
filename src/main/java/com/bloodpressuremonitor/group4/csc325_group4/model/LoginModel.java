@@ -32,6 +32,9 @@ public class LoginModel {
             alert.setHeaderText("Login Successful");
             alert.showAndWait();
             System.out.println("Login Successful User ID: " + currUser.getUid());
+
+            // TODO : load user from FireStore Database
+
             App.setRoot("/files/DashboardView.fxml");
             return true;
         }

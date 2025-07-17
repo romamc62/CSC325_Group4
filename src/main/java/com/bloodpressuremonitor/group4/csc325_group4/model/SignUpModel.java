@@ -25,6 +25,9 @@ public class SignUpModel {
             userRecord = App.fauth.createUser(request);
             newUser = new User(firstName, lastName, email, age, dateOfBirth, userRecord.getUid());
             System.out.println("Successfully registered user: \n"  + newUser.toString());
+
+            //TODO : initialize new user in FireStore database
+
             App.setRoot("/files/loginView.fxml");
             return true;
         } catch (FirebaseAuthException ex){
