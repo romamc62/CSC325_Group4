@@ -41,8 +41,15 @@ public class LoginModel {
     }
 
     public boolean pAuth(String email, String password) {
-        try{
+
+        try {
+            // Load API key from FirebaseAPI.json
             InputStream jsonIn = getClass().getResourceAsStream("/files/FirebaseAPI.json");
+            if (jsonIn == null) {
+                System.out.println("!! FirebaseAPI.json not found in /files/");
+                return false;
+            }
+
             JsonObject config;
             String apiKey;
             try (InputStreamReader reader = new InputStreamReader(jsonIn, StandardCharsets.UTF_8)) {
@@ -50,43 +57,56 @@ public class LoginModel {
                 apiKey = config.get("apiKey").getAsString();
             }
 
+            // Send request to Firebase Auth REST API
             String endpoint = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + apiKey;
-
             URL url = new URL(endpoint);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             conn.setDoOutput(true);
 
+            // Send JSON payload
             String jsonInput = String.format("""
-                    {
-                     "email": "%s",
-                     "password": "%s",
-                     "returnSecureToken": true
-                    }
-                    """, email, password);
+            {
+             "email": "%s",
+             "password": "%s",
+             "returnSecureToken": true
+            }
+            """, email, password);
 
-            try(OutputStream os = conn.getOutputStream()) {
+            try (OutputStream os = conn.getOutputStream()) {
                 byte[] input = jsonInput.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
 
-            if(conn.getResponseCode() == 200){
-                currUser = App.fauth.getUserByEmail(email);
-                return true;
-            } else{
-                System.out.println(conn.getResponseCode() + " " + conn.getResponseMessage());
+            // Debug HTTP response code
+            int responseCode = conn.getResponseCode();
+            System.out.println("Firebase response code: " + responseCode);
+
+            if (responseCode == 200) {
+                try {
+                    currUser = App.fauth.getUserByEmail(email);
+                    System.out.println("Firebase login successful for: " + email);
+                    return true;
+                } catch (FirebaseAuthException e) {
+                    System.out.println("getUserByEmail failed: " + e.getMessage());
+                    e.printStackTrace();
+                    return false;
+                }
+            } else {
+                // Print error response from Firebase
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+                String error = br.lines().collect(Collectors.joining("\n"));
+                System.out.println("Login failed. HTTP " + responseCode);
+                System.out.println("Firebase API Error Response: " + error);
             }
 
-        } catch (FileNotFoundException e){
-            System.out.println("File not found: " + e.getMessage());
-        } catch (MalformedURLException e) {
-            System.out.println("Malformed URL: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("IO Error: " + e.getMessage());
-        } catch (FirebaseAuthException e) {
-            System.out.println("Firebase Auth Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Exception during login: " + e.getMessage());
+            e.printStackTrace();
         }
+
         return false;
     }
+
 }
