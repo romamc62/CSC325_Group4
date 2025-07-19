@@ -39,7 +39,7 @@
                      alignment="TOP_CENTER" prefWidth="120.0" BorderPane.alignment="TOP_CENTER">
                   <children>
                      <Button fx:id="reminderButton" text="Reminders" onAction="#handleReminderButton"/>
-                     <Button text="Charts"/>
+                     <Button text="Charts" onAction="#handleChartsButton"/>
                      <Button text="Export" onAction="#handleExportData"/>
                      <Button fx:id="logoutButton" text="Logout" onAction="#handleLogoutButton"/>
                   </children>

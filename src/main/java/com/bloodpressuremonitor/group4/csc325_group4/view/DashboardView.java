@@ -50,6 +50,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -58,6 +61,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
@@ -97,6 +101,36 @@ public class DashboardView {
         systolicCol.setCellValueFactory(data -> data.getValue().systolicProperty().asObject());
         diastolicCol.setCellValueFactory(data -> data.getValue().diastolicProperty().asObject());
         timestampCol.setCellValueFactory(data -> data.getValue().timestampProperty());
+
+        // Highlight high systolic
+        systolicCol.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Integer value, boolean empty) {
+                super.updateItem(value, empty);
+                if (empty || value == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(value.toString());
+                    setStyle(value > 140 ? "-fx-background-color: #ffcccc;" : "");
+                }
+            }
+        });
+
+        // Highlight low diastolic
+        diastolicCol.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Integer value, boolean empty) {
+                super.updateItem(value, empty);
+                if (empty || value == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(value.toString());
+                    setStyle(value < 60 ? "-fx-background-color: #ffcccc;" : "");
+                }
+            }
+        });
 
         loadBloodPressureHistory(session.getUser().getUid());
     }
@@ -226,7 +260,7 @@ public class DashboardView {
                     alert.showAndWait();
                 });
             }
-        }, 10_000); // Show after 10 seconds (for demo)
+        }, 100_000); // Show after 100 seconds
     }
 
 
@@ -268,6 +302,17 @@ public class DashboardView {
             }
         }
     }
+    @FXML
+    private void handleChartsButton() {
+        try {
+            ChartView.readings = new ArrayList<>(tableView.getItems());
+            App.setRoot("/files/ChartView.fxml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
     // alerts:
