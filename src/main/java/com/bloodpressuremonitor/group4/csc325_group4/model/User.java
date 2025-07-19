@@ -16,6 +16,12 @@ public class User {
     private int age;
     private List<BloodPressureReading> BPHistory;
 
+    //called by firestore database when loading user data
+    public User(){
+
+    }
+
+
     //called when an existing user is loaded from database
     public User(String firstName, String lastName, String email, int age, LocalDate dateOfBirth, String id, List<BloodPressureReading> BPHistory) {
         this.firstName = firstName;
@@ -88,6 +94,10 @@ public class User {
 
     public List<BloodPressureReading> getBPHistory() {
         return BPHistory;
+    }
+
+    public void setBPHistory(List<BloodPressureReading> BPHistory) {
+        this.BPHistory = BPHistory;
     }
 
     @Override

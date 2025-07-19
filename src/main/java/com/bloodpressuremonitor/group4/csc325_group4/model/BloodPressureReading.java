@@ -11,6 +11,12 @@ public class BloodPressureReading {
     private int diastolic;
     private String readingTimestamp;
 
+    //called by firestore database
+    public BloodPressureReading(){
+
+    }
+
+    //called when adding a new blood pressure reading
     public BloodPressureReading(int systolic, int diastolic) {
         this.systolic = systolic;
         this.diastolic = diastolic;

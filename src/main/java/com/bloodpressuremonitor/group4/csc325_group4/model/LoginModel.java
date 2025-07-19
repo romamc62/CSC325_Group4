@@ -36,7 +36,10 @@ public class LoginModel {
             System.out.println("Login Successful User ID: " + currUser.getUid());
             SessionManager.setSession(new Session(currUser));
 
-            // TODO : load user from FireStore Database
+            //after successful authentication, a session is created with the user data
+            //from firestore database based on the userID
+            Session session = new Session(currUser.getUid(), currUser.getEmail());
+            SessionManager.setSession(session);
 
             App.setRoot("/files/DashboardView.fxml");
             return true;

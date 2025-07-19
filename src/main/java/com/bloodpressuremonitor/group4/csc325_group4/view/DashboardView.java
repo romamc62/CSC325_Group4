@@ -1,5 +1,7 @@
 /*package com.bloodpressuremonitor.group4.csc325_group4.view;
 
+import com.bloodpressuremonitor.group4.csc325_group4.session.Session;
+import com.bloodpressuremonitor.group4.csc325_group4.session.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,9 +18,16 @@ public class DashboardView {
     @FXML
     private VBox hamburgerMenuBox;
 
+    private Session session;
+
     private boolean isMenuOpen = false;
 
 
+    public void initialize() {
+        //gets session from SessionManager
+        session = SessionManager.getSession();
+        System.out.println(session.getUser().toString());
+    }
 
     @FXML
     private void handleHamburgerMenuButton(ActionEvent event){
@@ -33,6 +42,9 @@ public class DashboardView {
 
     @FXML
     private void handleLogoutButton(ActionEvent event) throws IOException {
+        //closes session
+        SessionManager.closeSession();
+        session = null;
         App.setRoot("/files/LoginView.fxml");
     }
 
