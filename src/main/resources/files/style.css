@@ -1,0 +1,38 @@
+/* style.css */
+.primary-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 10px;
+}
+
+.secondary-button {
+    -fx-background-color: #FF5722;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-padding: 6px 14px;
+    -fx-background-radius: 8px;
+}
+
+.menu-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #333;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+}
+
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-font-size: 24px;
+    -fx-text-fill: #333;
+    -fx-padding: 0 10 0 10;
+}
+
+.table-column-header {
+    -fx-background-color: #D3D3D3;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+

@@ -1,78 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.bloodpressuremonitor.group4.csc325_group4.view.DashboardView"
-            prefHeight="600.0" prefWidth="800.0">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-border-color: #E6F0FF;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bloodpressuremonitor.group4.csc325_group4.view.DashboardView">
 
    <children>
 
       <!-- Main UI ScrollPane -->
-      <ScrollPane fitToWidth="true" fitToHeight="true"
-                  AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
-                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: #E6F0FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
-         <BorderPane prefHeight="600.0" prefWidth="800.0">
+         <BorderPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #E6F0FF;">
 
             <!-- Top Header -->
             <top>
-               <HBox alignment="TOP_LEFT" spacing="10.0" prefHeight="50.0" BorderPane.alignment="TOP_LEFT">
+               <HBox alignment="TOP_LEFT" prefHeight="50.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
                   <padding>
-                     <Insets top="10.0" left="10.0" right="10.0" bottom="10.0"/>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </padding>
                   <children>
-                     <Button fx:id="hamburgerMenuButton" mnemonicParsing="false"
-                             onAction="#handleHamburgerMenuButton" text="☰"/>
-                     <ImageView fitHeight="78.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true"/>
+                     <Button fx:id="hamburgerMenuButton" mnemonicParsing="false" onAction="#handleHamburgerMenuButton" style="-fx-background-color: #007BFF;" text="☰" textFill="WHITE" />
+                     <ImageView fitHeight="78.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true" />
                   </children>
                </HBox>
             </top>
 
             <!-- Sidebar Menu -->
             <left>
-               <VBox fx:id="hamburgerMenuBox" spacing="20.0" translateX="-100.0"
-                     alignment="TOP_CENTER" prefWidth="120.0" BorderPane.alignment="TOP_CENTER">
+               <VBox fx:id="hamburgerMenuBox" alignment="TOP_CENTER" prefWidth="120.0" spacing="20.0" translateX="-100.0" BorderPane.alignment="TOP_CENTER">
                   <children>
-                     <Button fx:id="reminderButton" text="Reminders" onAction="#handleReminderButton"/>
-                     <Button text="Charts" onAction="#handleChartsButton"/>
-                     <Button text="Export" onAction="#handleExportData"/>
-                     <Button fx:id="logoutButton" text="Logout" onAction="#handleLogoutButton"/>
+                     <Button fx:id="reminderButton" onAction="#handleReminderButton" style="-fx-background-color: #007BFF;" text="Reminders" textFill="WHITE" translateX="-20.0" />
+                     <Button onAction="#handleChartsButton" style="-fx-background-color: #007BFF;" text="Charts" textFill="WHITE" translateX="-20.0" />
+                     <Button onAction="#handleExportData" style="-fx-background-color: #007BFF;" text="Export" textFill="WHITE" translateX="-20.0" />
+                     <Button fx:id="logoutButton" onAction="#handleLogoutButton" style="-fx-background-color: #007BFF;" text="Logout" textFill="WHITE" translateX="-20.0" />
                   </children>
                   <padding>
-                     <Insets top="20.0" left="10.0" right="10.0"/>
+                     <Insets left="10.0" right="10.0" top="20.0" />
                   </padding>
                </VBox>
             </left>
 
             <!-- Main Content -->
             <center>
-               <VBox spacing="15.0" alignment="TOP_LEFT" BorderPane.alignment="CENTER">
+               <VBox alignment="TOP_LEFT" spacing="15.0" BorderPane.alignment="CENTER">
                   <padding>
-                     <Insets top="10.0" left="10.0" right="10.0"/>
+                     <Insets left="10.0" right="10.0" top="10.0" />
                   </padding>
                   <children>
 
                      <!-- TableView -->
-                     <TableView fx:id="tableView" VBox.vgrow="ALWAYS" prefHeight="400.0" prefWidth="600.0">
+                     <TableView fx:id="tableView" prefHeight="400.0" prefWidth="879.0" style="-fx-background-color: #CCE0FF;" translateX="-50.0" translateY="-25.0" VBox.vgrow="ALWAYS">
                         <columns>
-                           <TableColumn fx:id="systolicCol" text="Systolic" prefWidth="150.0"/>
-                           <TableColumn fx:id="diastolicCol" text="Diastolic" prefWidth="150.0"/>
-                           <TableColumn fx:id="timestampCol" text="Timestamp" prefWidth="200.0"/>
+                           <TableColumn fx:id="systolicCol" prefWidth="194.0" style="-fx-background-color: #99C2FF;" text="Systolic" />
+                           <TableColumn fx:id="diastolicCol" prefWidth="267.0" style="-fx-background-color: #99C2FF;" text="Diastolic" />
+                           <TableColumn fx:id="timestampCol" prefWidth="194.0" style="-fx-background-color: #99C2FF;" text="Timestamp" />
                         </columns>
                      </TableView>
 
                      <!-- Add/Delete Reading Inputs -->
-                     <HBox spacing="10.0" alignment="CENTER_LEFT">
+                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <children>
-                           <TextField fx:id="systolicField" promptText="Systolic" prefWidth="100.0"/>
-                           <TextField fx:id="diastolicField" promptText="Diastolic" prefWidth="100.0"/>
-                           <Button text="Add Reading" onAction="#handleAddReading"/>
-                           <Button fx:id="deleteReadingButton" text="Delete Selected" onAction="#handleDeleteReading"/>
+                           <TextField fx:id="systolicField" alignment="BOTTOM_CENTER" prefWidth="100.0" promptText="Systolic" style="-fx-background-color: #007BFF;" translateX="80.0" translateY="-25.0" />
+                           <TextField fx:id="diastolicField" alignment="BOTTOM_CENTER" prefWidth="100.0" promptText="Diastolic" style="-fx-background-color: #007BFF;" translateX="80.0" translateY="-25.0" />
+                           <Button alignment="BOTTOM_CENTER" onAction="#handleAddReading" style="-fx-background-color: #007BFF;" text="Add Reading" textFill="WHITE" translateX="80.0" translateY="-25.0" />
+                           <Button fx:id="deleteReadingButton" alignment="BOTTOM_CENTER" onAction="#handleDeleteReading" style="-fx-background-color: #007BFF;" text="Delete Selected" textFill="WHITE" translateX="80.0" translateY="-25.0" />
                         </children>
                      </HBox>
 
@@ -84,11 +85,8 @@
       </ScrollPane>
 
       <!-- Login popup message -->
-      <Label fx:id="loginPopup"
-             text="Take daily blood pressure readings for accurate tracking."
-             style="-fx-background-color: rgba(0,0,0,0.8); -fx-text-fill: white; -fx-padding: 15px; -fx-font-size: 14px;"
-             layoutX="40" layoutY="40"
-             visible="false"/>
+      <Label fx:id="loginPopup" alignment="TOP_CENTER" layoutX="40" layoutY="40" style="-fx-background-color: rgba(0,0,0,0.8); -fx-text-fill: white; -fx-padding: 15px; -fx-font-size: 14px;" text="Take daily blood pressure readings for accurate tracking." translateX="180.0" translateY="-22.0" visible="false" />
+      <Label fx:id="loginPopup1" layoutX="50.0" layoutY="50.0" style="-fx-background-color: rgba(0,0,0,0.8); -fx-text-fill: white; -fx-padding: 15px; -fx-font-size: 14px;" text="Welcome!" translateX="500.0" translateY="-30.0" visible="false" />
 
    </children>
 </AnchorPane>
