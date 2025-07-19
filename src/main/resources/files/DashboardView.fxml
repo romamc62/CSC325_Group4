@@ -1,43 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bloodpressuremonitor.group4.csc325_group4.view.DashboardView">
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.bloodpressuremonitor.group4.csc325_group4.view.DashboardView"
+            prefHeight="600.0" prefWidth="800.0">
+
    <children>
-      <BorderPane layoutX="-5.0" layoutY="-6.0" prefHeight="409.0" prefWidth="609.0">
-         <top>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="400.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="hamburgerMenuButton" mnemonicParsing="false" onAction="#handleHamburgerMenuButton" text="☰" />
-                  <ImageView fitHeight="78.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </HBox>
-         </top>
-         <left>
-            <VBox fx:id="hamburgerMenuBox" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" translateX="-100.0" BorderPane.alignment="TOP_CENTER">
-               <children>
-                  <Button mnemonicParsing="false" text="Log" />
-                  <Button mnemonicParsing="false" text="Charts" />
-                  <Button mnemonicParsing="false" text="Export" />
-                  <Button fx:id="logoutButton" onAction="#handleLogoutButton" mnemonicParsing="false" text="Logout" />
-               </children>
-               <padding>
-                  <Insets top="20.0" />
-               </padding>
-            </VBox>
-         </left>
-         <center>
-            <TableView fx:id="tableView" prefWidth="500" prefHeight="300">
-               <columns>
-                  <TableColumn fx:id="systolicCol" text="Systolic" prefWidth="100" />
-                  <TableColumn fx:id="diastolicCol" text="Diastolic" prefWidth="100" />
-                  <TableColumn fx:id="timestampCol" text="Timestamp" prefWidth="300" />
-               </columns>
-            </TableView>
-         </center>
-      </BorderPane>
+      <ScrollPane fitToWidth="true" fitToHeight="true" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+         <BorderPane prefHeight="600.0" prefWidth="800.0">
+
+            <!-- Top Header -->
+            <top>
+               <HBox alignment="TOP_LEFT" spacing="10.0" prefHeight="50.0" BorderPane.alignment="TOP_LEFT">
+                  <padding>
+                     <Insets top="10.0" left="10.0" right="10.0" bottom="10.0"/>
+                  </padding>
+                  <children>
+                     <Button fx:id="hamburgerMenuButton" mnemonicParsing="false" onAction="#handleHamburgerMenuButton" text="☰"/>
+                     <ImageView fitHeight="78.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true"/>
+                  </children>
+               </HBox>
+            </top>
+
+            <!-- Sidebar Menu -->
+            <left>
+               <VBox fx:id="hamburgerMenuBox" spacing="20.0" translateX="-100.0" alignment="TOP_CENTER" prefWidth="120.0" BorderPane.alignment="TOP_CENTER">
+                  <children>
+                     <Button text="Log"/>
+                     <Button text="Charts"/>
+                     <Button text="Export"/>
+                     <Button fx:id="logoutButton" text="Logout" onAction="#handleLogoutButton"/>
+                  </children>
+                  <padding>
+                     <Insets top="20.0" left="10.0" right="10.0"/>
+                  </padding>
+               </VBox>
+            </left>
+
+            <!-- Main Content -->
+            <center>
+               <VBox spacing="15.0" alignment="TOP_LEFT" BorderPane.alignment="CENTER">
+                  <padding>
+                     <Insets top="10.0" left="10.0" right="10.0"/>
+                  </padding>
+                  <children>
+
+                     <!-- TableView -->
+                     <TableView fx:id="tableView" VBox.vgrow="ALWAYS" prefHeight="400.0" prefWidth="600.0">
+                        <columns>
+                           <TableColumn fx:id="systolicCol" text="Systolic" prefWidth="150.0"/>
+                           <TableColumn fx:id="diastolicCol" text="Diastolic" prefWidth="150.0"/>
+                           <TableColumn fx:id="timestampCol" text="Timestamp" prefWidth="200.0"/>
+                        </columns>
+                     </TableView>
+
+                     <!-- Add/Delete Reading Inputs -->
+                     <HBox spacing="10.0" alignment="CENTER_LEFT">
+                        <children>
+                           <TextField fx:id="systolicField" promptText="Systolic" prefWidth="100.0"/>
+                           <TextField fx:id="diastolicField" promptText="Diastolic" prefWidth="100.0"/>
+                           <Button text="Add Reading" onAction="#handleAddReading"/>
+                           <Button fx:id="deleteReadingButton" text="Delete Selected" onAction="#handleDeleteReading"/>
+                        </children>
+                     </HBox>
+
+                  </children>
+               </VBox>
+            </center>
+
+         </BorderPane>
+      </ScrollPane>
    </children>
 </AnchorPane>

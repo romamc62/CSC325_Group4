@@ -92,9 +92,10 @@ public class BloodPressureReading {
     public IntegerProperty diastolicProperty() { return diastolic; }
     public StringProperty timestampProperty() { return readingTimestamp; }
 
-    private static String dateToString() {
+    public static String dateToString() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
         return now.format(formatter);
     }
+
 }

@@ -43,16 +43,18 @@ package com.bloodpressuremonitor.group4.csc325_group4.view;
 import com.bloodpressuremonitor.group4.csc325_group4.model.BloodPressureReading;
 import com.bloodpressuremonitor.group4.csc325_group4.session.Session;
 import com.bloodpressuremonitor.group4.csc325_group4.session.SessionManager;
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,12 +65,16 @@ public class DashboardView {
 
     @FXML private Button hamburgerMenuButton;
     @FXML private Button logoutButton;
+    @FXML private Button deleteReadingButton;
     @FXML private VBox hamburgerMenuBox;
 
     @FXML private TableView<BloodPressureReading> tableView;
     @FXML private TableColumn<BloodPressureReading, Integer> systolicCol;
     @FXML private TableColumn<BloodPressureReading, Integer> diastolicCol;
     @FXML private TableColumn<BloodPressureReading, String> timestampCol;
+
+    @FXML private TextField systolicField;
+    @FXML private TextField diastolicField;
 
     private boolean isMenuOpen = false;
     private Session session;
@@ -77,13 +83,16 @@ public class DashboardView {
     public void initialize() {
         session = SessionManager.getSession();
 
-        // Map columns to basic POJO getters
-        systolicCol.setCellValueFactory(data -> new javafx.beans.property.SimpleIntegerProperty(data.getValue().getSystolic()).asObject());
-        diastolicCol.setCellValueFactory(data -> new javafx.beans.property.SimpleIntegerProperty(data.getValue().getDiastolic()).asObject());
-        timestampCol.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getReadingTimestamp()));
+        VBox.setVgrow(tableView, Priority.ALWAYS);
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        systolicCol.setCellValueFactory(data -> data.getValue().systolicProperty().asObject());
+        diastolicCol.setCellValueFactory(data -> data.getValue().diastolicProperty().asObject());
+        timestampCol.setCellValueFactory(data -> data.getValue().timestampProperty());
 
         loadBloodPressureHistory(session.getUser().getUid());
     }
+
     private void loadBloodPressureHistory(String userId) {
         try {
             DocumentReference docRef = App.fstore.collection("userData").document(userId);
@@ -91,7 +100,7 @@ public class DashboardView {
             DocumentSnapshot doc = future.get();
 
             if (doc.exists()) {
-                List<Map<String, Object>> bpHistory = (List<Map<String, Object>>) doc.get("bphistory"); // <- FIXED
+                List<Map<String, Object>> bpHistory = (List<Map<String, Object>>) doc.get("bphistory");
                 System.out.println("bpHistory size: " + (bpHistory != null ? bpHistory.size() : "null"));
 
                 if (bpHistory != null) {
@@ -112,6 +121,76 @@ public class DashboardView {
         }
     }
 
+    @FXML
+    private void handleAddReading() {
+        System.out.println("Add Reading button clicked!");
+
+        try {
+            int systolic = Integer.parseInt(systolicField.getText());
+            int diastolic = Integer.parseInt(diastolicField.getText());
+
+            if (systolic < 70 || systolic > 250 || diastolic < 40 || diastolic > 150) {
+                showAlert("Invalid Input", "Please enter realistic blood pressure values:\n• Systolic: 70–250\n• Diastolic: 40–150");
+                return;
+            }
+
+            String timestamp = BloodPressureReading.dateToString();
+            BloodPressureReading reading = new BloodPressureReading(systolic, diastolic, timestamp);
+
+            // Add to table view
+            tableView.getItems().add(0, reading);
+            tableView.scrollTo(reading);
+            systolicField.clear();
+            diastolicField.clear();
+
+            // SAVE TO FIREBASE
+            saveReadingToFirestore(reading);
+
+        } catch (NumberFormatException e) {
+            showAlert("Invalid Input", "Please enter valid **numbers only** for both systolic and diastolic values.");
+        }
+    }
+
+    @FXML
+    private void handleDeleteReading() {
+        BloodPressureReading selected = tableView.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            tableView.getItems().remove(selected);
+            updateFirestoreAfterDelete();
+        } else {
+            System.out.println("No row selected");
+        }
+    }
+
+    private void updateFirestoreAfterDelete() {
+        try {
+            List<BloodPressureReading> updatedList = new ArrayList<>(tableView.getItems());
+            List<Map<String, Object>> mappedList = new ArrayList<>();
+            for (BloodPressureReading reading : updatedList) {
+                Map<String, Object> entry = Map.of(
+                        "systolic", reading.getSystolic(),
+                        "diastolic", reading.getDiastolic(),
+                        "readingTimestamp", reading.getReadingTimestamp()
+                );
+                mappedList.add(entry);
+            }
+
+            DocumentReference docRef = App.fstore.collection("userData").document(session.getUser().getUid());
+            docRef.update("bphistory", mappedList);
+            System.out.println("Firestore updated after deletion");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
     @FXML
     private void handleHamburgerMenuButton(ActionEvent event) {
@@ -128,4 +207,26 @@ public class DashboardView {
     private void handleLogoutButton(ActionEvent event) throws IOException {
         App.setRoot("/files/LoginView.fxml");
     }
+
+    private void saveReadingToFirestore(BloodPressureReading reading) {
+        try {
+            String userId = session.getUser().getUid();
+            DocumentReference docRef = App.fstore.collection("userData").document(userId);
+
+            Map<String, Object> newEntry = Map.of(
+                    "systolic", reading.getSystolic(),
+                    "diastolic", reading.getDiastolic(),
+                    "readingTimestamp", reading.getReadingTimestamp()
+            );
+
+            // Append new reading to array field "bphistory"
+            docRef.update("bphistory", com.google.cloud.firestore.FieldValue.arrayUnion(newEntry))
+                    .addListener(() -> System.out.println("Reading saved."), Runnable::run);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Save Failed", "There was an error saving the reading to the cloud.");
+        }
+    }
+
 }
