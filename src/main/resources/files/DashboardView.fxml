@@ -11,7 +11,10 @@
             prefHeight="600.0" prefWidth="800.0">
 
    <children>
-      <ScrollPane fitToWidth="true" fitToHeight="true" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+
+      <!-- Main UI ScrollPane -->
+      <ScrollPane fitToWidth="true" fitToHeight="true"
+                  AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 
          <BorderPane prefHeight="600.0" prefWidth="800.0">
@@ -23,7 +26,8 @@
                      <Insets top="10.0" left="10.0" right="10.0" bottom="10.0"/>
                   </padding>
                   <children>
-                     <Button fx:id="hamburgerMenuButton" mnemonicParsing="false" onAction="#handleHamburgerMenuButton" text="☰"/>
+                     <Button fx:id="hamburgerMenuButton" mnemonicParsing="false"
+                             onAction="#handleHamburgerMenuButton" text="☰"/>
                      <ImageView fitHeight="78.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true"/>
                   </children>
                </HBox>
@@ -31,11 +35,12 @@
 
             <!-- Sidebar Menu -->
             <left>
-               <VBox fx:id="hamburgerMenuBox" spacing="20.0" translateX="-100.0" alignment="TOP_CENTER" prefWidth="120.0" BorderPane.alignment="TOP_CENTER">
+               <VBox fx:id="hamburgerMenuBox" spacing="20.0" translateX="-100.0"
+                     alignment="TOP_CENTER" prefWidth="120.0" BorderPane.alignment="TOP_CENTER">
                   <children>
                      <Button text="Log"/>
                      <Button text="Charts"/>
-                     <Button text="Export"/>
+                     <Button text="Export" onAction="#handleExportData"/>
                      <Button fx:id="logoutButton" text="Logout" onAction="#handleLogoutButton"/>
                   </children>
                   <padding>
@@ -77,5 +82,13 @@
 
          </BorderPane>
       </ScrollPane>
+
+      <!-- Login popup message -->
+      <Label fx:id="loginPopup"
+             text="Take daily blood pressure readings for accurate tracking."
+             style="-fx-background-color: rgba(0,0,0,0.8); -fx-text-fill: white; -fx-padding: 15px; -fx-font-size: 14px;"
+             layoutX="40" layoutY="40"
+             visible="false"/>
+
    </children>
 </AnchorPane>

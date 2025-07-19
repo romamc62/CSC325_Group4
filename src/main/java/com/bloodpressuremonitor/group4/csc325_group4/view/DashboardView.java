@@ -43,6 +43,7 @@ package com.bloodpressuremonitor.group4.csc325_group4.view;
 import com.bloodpressuremonitor.group4.csc325_group4.model.BloodPressureReading;
 import com.bloodpressuremonitor.group4.csc325_group4.session.Session;
 import com.bloodpressuremonitor.group4.csc325_group4.session.SessionManager;
+import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -55,8 +56,12 @@ import javafx.scene.layout.VBox;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
+import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +78,8 @@ public class DashboardView {
     @FXML private TableColumn<BloodPressureReading, Integer> diastolicCol;
     @FXML private TableColumn<BloodPressureReading, String> timestampCol;
 
+    @FXML private Label loginPopup;
+
     @FXML private TextField systolicField;
     @FXML private TextField diastolicField;
 
@@ -82,6 +89,7 @@ public class DashboardView {
     @FXML
     public void initialize() {
         session = SessionManager.getSession();
+        showLoginPopup(); // show reminder after login
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -120,6 +128,18 @@ public class DashboardView {
             e.printStackTrace();
         }
     }
+
+    private void showLoginPopup() {
+        loginPopup.setVisible(true);
+        FadeTransition fade = new FadeTransition(Duration.seconds(6), loginPopup);
+        fade.setFromValue(0.0);
+        fade.setToValue(1.0);
+        fade.setCycleCount(2);
+        fade.setAutoReverse(true);
+        fade.setOnFinished(e -> loginPopup.setVisible(false));
+        fade.play();
+    }
+
 
     @FXML
     private void handleAddReading() {
@@ -162,6 +182,7 @@ public class DashboardView {
         }
     }
 
+    // Sync to firestore
     private void updateFirestoreAfterDelete() {
         try {
             List<BloodPressureReading> updatedList = new ArrayList<>(tableView.getItems());
@@ -183,6 +204,46 @@ public class DashboardView {
         }
     }
 
+    @FXML
+    private void handleExportData() {
+        System.out.println("Readings to export: " + tableView.getItems().size());  // DEBUG
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Blood Pressure History");
+        fileChooser.setInitialFileName("bp_readings.csv");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("CSV Files", "*.csv")
+        );
+        File file = fileChooser.showSaveDialog(tableView.getScene().getWindow());
+
+        if (file != null) {
+            try (PrintWriter writer = new PrintWriter(file)) {
+                writer.println("Systolic,Diastolic,Timestamp");
+                for (BloodPressureReading reading : tableView.getItems()) {
+                    writer.printf("%d,%d,%s%n",
+                            reading.getSystolic(),
+                            reading.getDiastolic(),
+                            reading.getReadingTimestamp()
+                    );
+                }
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Export Successful");
+                alert.setHeaderText(null);
+                alert.setContentText("Data exported to CSV successfully!");
+                alert.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Export Failed");
+                alert.setHeaderText("Error exporting data");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+            }
+        }
+    }
+
+
+    // alerts:
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
