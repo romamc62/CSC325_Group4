@@ -67,16 +67,6 @@
                         </columns>
                      </TableView>
 
-                     <!-- BP Alert Label -->
-                     <Label fx:id="bpAlertLabel"
-                            text="High BP reading – consult your physician."
-                            style="-fx-background-color: #FFCCCC; -fx-text-fill: #b30000; -fx-font-weight: bold; -fx-padding: 10px; -fx-font-size: 14px; -fx-background-radius: 8px;"
-                            visible="false"
-                            AnchorPane.leftAnchor="150.0"
-                            AnchorPane.rightAnchor="150.0"
-                            AnchorPane.bottomAnchor="105.0"
-                            alignment="CENTER"/>
-
                      <!-- Add/Delete Reading Inputs -->
                      <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <children>
@@ -95,8 +85,10 @@
       </ScrollPane>
 
       <!-- Login popup message -->
-      <Label fx:id="loginPopup" alignment="TOP_CENTER" layoutX="40" layoutY="40" style="-fx-background-color:  #CCE0FF; -fx-text-fill: white; -fx-padding: 15px; -fx-font-size: 14px;" text="Take daily blood pressure readings for accurate tracking." translateX="180.0" translateY="-22.0" visible="false" />
+      <Label fx:id="loginPopup" alignment="TOP_CENTER" layoutX="40" layoutY="40" style="-fx-background-color: #99C2FF; -fx-text-fill: white; -fx-padding: 15px; -fx-font-size: 14px;" text="Take daily blood pressure readings for accurate tracking." translateX="180.0" translateY="-22.0" visible="false" />
       <Label fx:id="loginPopup1" layoutX="50.0" layoutY="50.0" style="-fx-background-color:  #CCE0FF; -fx-text-fill: white; -fx-padding: 15px; -fx-font-size: 14px;" text="Welcome!" translateX="500.0" translateY="-30.0" visible="false" />
+
+      <Label fx:id="bpAlertLabel" maxWidth="Infinity" style="-fx-background-color: #FFF3CD; -fx-text-fill: black; -fx-padding: 10px; -fx-font-size: 14px; -fx-font-weight: bold; -fx-border-color: #FFD966; -fx-border-radius: 4px;" text="High BP reading – consult your physician." textAlignment="CENTER" textFill="#b21e1e" translateX="250.0" translateY="75.0" visible="false" />
 
    </children>
 </AnchorPane>
