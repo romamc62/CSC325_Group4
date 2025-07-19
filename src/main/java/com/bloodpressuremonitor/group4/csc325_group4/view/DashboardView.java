@@ -44,6 +44,7 @@ import com.bloodpressuremonitor.group4.csc325_group4.model.BloodPressureReading;
 import com.bloodpressuremonitor.group4.csc325_group4.session.Session;
 import com.bloodpressuremonitor.group4.csc325_group4.session.SessionManager;
 import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -67,6 +68,8 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class DashboardView {
@@ -82,6 +85,8 @@ public class DashboardView {
     @FXML private TableColumn<BloodPressureReading, String> timestampCol;
 
     @FXML private Label loginPopup;
+    @FXML private Label bpAlertLabel;
+
 
     @FXML private TextField systolicField;
     @FXML private TextField diastolicField;
@@ -174,14 +179,27 @@ public class DashboardView {
         fade.play();
     }
 
-
     @FXML
     private void handleAddReading() {
-        System.out.println("Add Reading button clicked!");
-
         try {
             int systolic = Integer.parseInt(systolicField.getText());
             int diastolic = Integer.parseInt(diastolicField.getText());
+
+            checkBPAlert(systolic, diastolic);
+            if (systolic >= 140 || diastolic >= 90 || systolic <= 90 || diastolic <= 60) {
+                showBPAlert("High BP reading – consult your physician.");
+            }
+
+            // conditional block to show alert
+            if (systolic >= 140 || diastolic >= 90) {
+                bpAlertLabel.setText("High BP reading – consult your physician.");
+                bpAlertLabel.setVisible(true);
+            } else if (systolic <= 90 || diastolic <= 60) {
+                bpAlertLabel.setText("Low BP reading – consult your physician.");
+                bpAlertLabel.setVisible(true);
+            } else {
+                bpAlertLabel.setVisible(false);
+            }
 
             if (systolic < 70 || systolic > 250 || diastolic < 40 || diastolic > 150) {
                 showAlert("Invalid Input", "Please enter realistic blood pressure values:\n• Systolic: 70–250\n• Diastolic: 40–150");
@@ -204,6 +222,7 @@ public class DashboardView {
             showAlert("Invalid Input", "Please enter valid **numbers only** for both systolic and diastolic values.");
         }
     }
+
 
     @FXML
     private void handleDeleteReading() {
@@ -237,6 +256,30 @@ public class DashboardView {
             e.printStackTrace();
         }
     }
+
+    private void checkBPAlert(int systolic, int diastolic) {
+        if (systolic >= 140 || diastolic >= 90) {
+            bpAlertLabel.setText("High BP reading on " + getCurrentDate() + " – consult your physician.");
+            bpAlertLabel.setVisible(true);
+        } else {
+            bpAlertLabel.setVisible(false);
+        }
+    }
+
+    private void showBPAlert(String message) {
+        bpAlertLabel.setText(message);
+        bpAlertLabel.setVisible(true);
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(10));
+        delay.setOnFinished(event -> bpAlertLabel.setVisible(false));
+        delay.play();
+    }
+
+
+    private String getCurrentDate() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("MMMM d"));
+    }
+
 
     @FXML
     private void handleReminderButton() {
