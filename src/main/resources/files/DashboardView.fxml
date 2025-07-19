@@ -38,7 +38,7 @@
                <VBox fx:id="hamburgerMenuBox" spacing="20.0" translateX="-100.0"
                      alignment="TOP_CENTER" prefWidth="120.0" BorderPane.alignment="TOP_CENTER">
                   <children>
-                     <Button text="Log"/>
+                     <Button fx:id="reminderButton" text="Reminders" onAction="#handleReminderButton"/>
                      <Button text="Charts"/>
                      <Button text="Export" onAction="#handleExportData"/>
                      <Button fx:id="logoutButton" text="Logout" onAction="#handleLogoutButton"/>

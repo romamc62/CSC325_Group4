@@ -44,6 +44,7 @@ import com.bloodpressuremonitor.group4.csc325_group4.model.BloodPressureReading;
 import com.bloodpressuremonitor.group4.csc325_group4.session.Session;
 import com.bloodpressuremonitor.group4.csc325_group4.session.SessionManager;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -62,9 +63,7 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DashboardView {
 
@@ -90,6 +89,7 @@ public class DashboardView {
     public void initialize() {
         session = SessionManager.getSession();
         showLoginPopup(); // show reminder after login
+        scheduleDailyReminder(); // schedule reminder
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -203,6 +203,33 @@ public class DashboardView {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void handleReminderButton() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Reminders");
+        alert.setHeaderText("Set Daily Reminder");
+        alert.setContentText("This will remind you each day to log your blood pressure.");
+        alert.showAndWait();
+    }
+
+    private void scheduleDailyReminder() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Reminder");
+                    alert.setHeaderText("Don't forget!");
+                    alert.setContentText("Please take and log your blood pressure today.");
+                    alert.showAndWait();
+                });
+            }
+        }, 10_000); // Show after 10 seconds (for demo)
+    }
+
+
 
     @FXML
     private void handleExportData() {
