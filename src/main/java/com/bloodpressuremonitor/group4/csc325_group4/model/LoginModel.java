@@ -1,5 +1,7 @@
 package com.bloodpressuremonitor.group4.csc325_group4.model;
 
+import com.bloodpressuremonitor.group4.csc325_group4.session.Session;
+import com.bloodpressuremonitor.group4.csc325_group4.session.SessionManager;
 import com.bloodpressuremonitor.group4.csc325_group4.view.App;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
@@ -33,7 +35,10 @@ public class LoginModel {
             alert.showAndWait();
             System.out.println("Login Successful User ID: " + currUser.getUid());
 
-            // TODO : load user from FireStore Database
+            //after successful authentication, a session is created with the user data
+            //from firestore database based on the userID
+            Session session = new Session(currUser.getUid(), currUser.getEmail());
+            SessionManager.setSession(session);
 
             App.setRoot("/files/DashboardView.fxml");
             return true;
