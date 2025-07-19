@@ -6,7 +6,7 @@ The app will feature an easy-to-use interface where users can log in, input bloo
 
 The project will be built using JavaFX and Firebase and will be developed in NetBeans. We will use GitHub for version control and collaboration, and YouTrack to assign and track tasks. A basic design for the interface will be created using Figma, and the full system will follow the WRSPM model for planning and documentation. 
 
-# REQUIREMENTS:
+## REQUIREMENTS:
 ### resources/files should contain:
 - FirebaseAPI.json with variables "apiKey" and "projectId"
 - key.json from the firebase service accounts adminsdk
@@ -22,7 +22,7 @@ service cloud.firestore {
     }
   }
 }
-# WRSPM: 
+## WRSPM: 
 #### W – World Assumptions
 Users have access to a smartphone or tablet and basic digital literacy.
 
