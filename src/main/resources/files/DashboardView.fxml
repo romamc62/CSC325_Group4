@@ -24,14 +24,20 @@
                   <Button mnemonicParsing="false" text="Export" />
                   <Button fx:id="logoutButton" onAction="#handleLogoutButton" mnemonicParsing="false" text="Logout" />
                </children>
-               <BorderPane.margin>
-                  <Insets />
-               </BorderPane.margin>
                <padding>
                   <Insets top="20.0" />
                </padding>
             </VBox>
          </left>
+         <center>
+            <TableView fx:id="tableView" prefWidth="500" prefHeight="300">
+               <columns>
+                  <TableColumn fx:id="systolicCol" text="Systolic" prefWidth="100" />
+                  <TableColumn fx:id="diastolicCol" text="Diastolic" prefWidth="100" />
+                  <TableColumn fx:id="timestampCol" text="Timestamp" prefWidth="300" />
+               </columns>
+            </TableView>
+         </center>
       </BorderPane>
    </children>
 </AnchorPane>
