@@ -12,7 +12,7 @@ The project will be built using JavaFX and Firebase and will be developed in Net
 - key.json from the firebase service accounts adminsdk
 
 
-### update firebase rules to match the following: 
+### update Cloud Firestore rules to match the following: 
 rules_version = '2';
 
 service cloud.firestore {
