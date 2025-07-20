@@ -307,7 +307,6 @@ public class DashboardView {
     }
 
 
-
     @FXML
     private void handleExportData() {
         System.out.println("Readings to export: " + tableView.getItems().size());  // DEBUG
@@ -345,6 +344,7 @@ public class DashboardView {
             }
         }
     }
+
     @FXML
     private void handleChartsButton() {
         try {
@@ -354,8 +354,6 @@ public class DashboardView {
             e.printStackTrace();
         }
     }
-
-
 
 
     // alerts:
