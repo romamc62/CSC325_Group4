@@ -43,6 +43,8 @@ package com.bloodpressuremonitor.group4.csc325_group4.view;
 import com.bloodpressuremonitor.group4.csc325_group4.model.BloodPressureReading;
 import com.bloodpressuremonitor.group4.csc325_group4.session.Session;
 import com.bloodpressuremonitor.group4.csc325_group4.session.SessionManager;
+import com.bloodpressuremonitor.group4.csc325_group4.viewmodel.AccessDataViewModel;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -97,8 +99,12 @@ public class DashboardView {
     @FXML
     public void initialize() {
         session = SessionManager.getSession();
-        showLoginPopup(); // show reminder after login
-        scheduleDailyReminder(); // schedule reminder
+         //for first time login, show a reminder as well as schedule a popup reminder
+        if(AccessDataViewModel.firstLaunch()){
+            showLoginPopup(); // show reminder after login
+            scheduleDailyReminder(); // schedule popup reminder
+            AccessDataViewModel.setFirstLaunch(false);
+        }
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

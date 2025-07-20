@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bloodpressuremonitor.group4.csc325_group4.view.SignUpView">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bloodpressuremonitor.group4.csc325_group4.view.SignUpView">
    <children>
-      <BorderPane prefHeight="420.0" prefWidth="651.0">
+      <BorderPane prefHeight="420.0" prefWidth="851.0">
          <bottom>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
                <children>
@@ -37,7 +37,7 @@
             </VBox>
          </center>
          <top>
-            <Label alignment="CENTER" prefHeight="76.0" prefWidth="385.0" text="Blood Pressure Monitoring System Sign Up" textAlignment="CENTER" translateY="15.0" BorderPane.alignment="CENTER">
+            <Label alignment="CENTER" prefHeight="176.0" prefWidth="385.0" text="Blood Pressure Monitoring System Sign Up" textAlignment="CENTER" translateY="15.0" BorderPane.alignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font></Label>
