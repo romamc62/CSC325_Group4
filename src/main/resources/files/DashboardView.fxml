@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-border-color: #E6F0FF;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bloodpressuremonitor.group4.csc325_group4.view.DashboardView">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-border-color: #E6F0FF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bloodpressuremonitor.group4.csc325_group4.view.DashboardView">
 
    <children>
 
